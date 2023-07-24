@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int n = input.nextInt();
+        int t = input.nextInt();
+        int[][] trees = new int[t][2];
+        for (int i = 0; i < t; i++) {
+            trees[i][0] = input.nextInt();
+            trees[i][1] = input.nextInt();
+        }
+        int maxPoolSize = 0;
+        for (int i = 0; i < t; i++) {
+            for (int j = 0; j < t; j++) {
+                int poolTop = Math.min(trees[i][0], n);
+                int poolLeft = Math.min(trees[j][1], n);
+                int poolBottom = 1;
+                int poolRight = 1;
+                for (int k = 0; k < t; k++) {
+                    if (trees[k][0] > poolTop) {
+                        poolBottom = Math.max(poolBottom, trees[k][0]);
+                    }
+                    if (trees[k][1] > poolLeft) {
+                        poolRight = Math.max(poolRight, trees[k][1]);
+                    }
+                }
+                maxPoolSize = Math.max(maxPoolSize, Math.min(poolTop - poolBottom, poolLeft - poolRight));
+            }
+        }
+        System.out.println(maxPoolSize);
+    }
+}
