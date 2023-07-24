@@ -1,0 +1,64 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int x = input.nextInt();
+        Map<String, Set<String>> sameGroup = new HashMap<>();
+        for (int i = 0; i < x; i++) {
+            String a = input.next();
+            String b = input.next();
+            if (!sameGroup.containsKey(a)) {
+                sameGroup.put(a, new HashSet<>());
+            }
+            sameGroup.get(a).add(b);
+            if (!sameGroup.containsKey(b)) {
+                sameGroup.put(b, new HashSet<>());
+            }
+            sameGroup.get(b).add(a);
+        }
+        int y = input.nextInt();
+        Map<String, Set<String>> differentGroup = new HashMap<>();
+        for (int i = 0; i < y; i++) {
+            String a = input.next();
+            String b = input.next();
+            if (!differentGroup.containsKey(a)) {
+                differentGroup.put(a, new HashSet<>());
+            }
+            differentGroup.get(a).add(b);
+            if (!differentGroup.containsKey(b)) {
+                differentGroup.put(b, new HashSet<>());
+            }
+            differentGroup.get(b).add(a);
+        }
+        int g = input.nextInt();
+        Map<String, Set<String>> groups = new HashMap<>();
+        for (int i = 0; i < g; i++) {
+            String a = input.next();
+            String b = input.next();
+            String c = input.next();
+            Set<String> group = new HashSet<>(Arrays.asList(a, b, c));
+            groups.put(a, group);
+            groups.put(b, group);
+            groups.put(c, group);
+        }
+        int count = 0;
+        for (String student : sameGroup.keySet()) {
+            Set<String> group = groups.get(student);
+            for (String other : sameGroup.get(student)) {
+                if (!group.contains(other)) {
+                    count++;
+                }
+            }
+        }
+        for (String student : differentGroup.keySet()) {
+            Set<String> group = groups.get(student);
+            for (String other : differentGroup.get(student)) {
+                if (group.contains(other)) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count / 2);
+    }
+}
