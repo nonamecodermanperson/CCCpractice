@@ -1,0 +1,11 @@
+shelf = input()
+L = shelf.count('L')
+M = shelf.count('M')
+S = shelf.count('S')
+l, m, s = shelf[:L], shelf[L:L+M], shelf[L+M:]
+swaps = 0
+swaps += min(l.count('M'), m.count('L'))
+swaps += min(l.count('S'), s.count('L'))
+swaps += min(m.count('S'), s.count('M'))
+swaps += 2 * (m.count('L') - min(l.count('M'), m.count('L')))
+print(swaps)
